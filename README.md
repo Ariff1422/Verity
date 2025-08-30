@@ -32,6 +32,12 @@ Ensure your environment includes packages like:
 - `nlpaug`, `nltk`, `spaCy` (for augmentation and preprocessing)
 - `matplotlib`, `seaborn` (for visualizations)
 
+Navigate to the /src directory
+Then run:
+```bash
+python app.py
+```
+
 \* adjust based on your chosen framework.
 
 ### 2. Data Preparation
