@@ -40,7 +40,7 @@ python app.py
 
 \* adjust based on your chosen framework.
 
-### 2. Data Preparation
+### 2. Data Preparation (some datasets have been left out due to GitHub size issues)
 
 - **Step 1:** Place raw review data into `data/raw/`.
 - **Step 2:** Run preprocessing notebooks in `notebooks/` to:
