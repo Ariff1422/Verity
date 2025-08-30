@@ -47,40 +47,25 @@ python app.py
   - Clean text: remove noise, normalize punctuation/casing
   - Handle missing values
   - Label or categorize reviews (if necessary)
-  - Save cleaned data to `data/processed/`
 
 ### 3. Augmentation
 
 Augment the processed data to enhance model robustness:
 - Apply techniques like synonym replacement, back-translation, random insertion/swap (via `nlpaug` or custom scripts)
 - Balance class distribution if skewed (e.g., oversample underrepresented classes)
-- Store augmented datasets in `data/augmented/`
 
 ### 4. Model Training
 
-Run training scripts via:
-```bash
-python src/train.py \
-  --train data/augmented/train.csv \
-  --val data/processed/val.csv \
-  --output models/ \
-  --epochs 10 \
-  --batch_size 32 \
-  [...other args]
-```
-
-This workflow:
+Workflow:
 - Loads data and tokenizes/codes text inputs
 - Defines and trains the model
 - Saves checkpoints and best-performing model to `models/`
 - Logs performance metrics (accuracy, F1, precision, recall)
 
 ### 5. Evaluation & Inference
-
-Use `src/evaluate.py` to:
 - Validate model on held-out test sets
 - Generate evaluation reports and confusion matrices
-- Produce predictions on new review data (save to `predictions/`)
+- Produce predictions on new review data
 
 ---
 
@@ -97,7 +82,7 @@ Use `src/evaluate.py` to:
 ### A. Data Wrangling
 
 1. **Raw Data Ingestion**
-   - Load data from sources (CSV, JSON, databases) into `data/raw/`.
+   - Load data from sources (CSV, JSON, databases) into `data/raw/`--> too big to upload.
    - Record metadata (e.g., timestamps, source IDs, product IDs).
 
 2. **Cleaning & Preprocessing**
@@ -122,14 +107,13 @@ Use `src/evaluate.py` to:
    - **Synonym Replacement:** Replace words with synonyms (via `WordNet`, `nlpaug`).
    - **Back-Translation:** Translate text to another language and back.
    - **Random Insertion/Swap/Deletion:** Introduce variation while preserving meaning.
-   - **Text Perturbation:** Add noise like typos to simulate realistic input.
 
 2. **Balancing Classes**
    - Identify underrepresented classes.
    - Augment these more aggressively or oversample them to achieve near-equal distribution.
 
 3. **Pipeline**
-   - Apply augmentation during training or store augmented versions in `data/augmented/`.
+   - Apply augmentation during training or store augmented versions.
    - Keep a mapping of original to augmented samples for traceability.
 
 4. **Quality Check**
@@ -140,7 +124,7 @@ Use `src/evaluate.py` to:
 ### C. Model Training
 
 1. **Architecture**
-   - Typical options: Logistic Regression with TF-IDF, LSTM/GRU-based models, Transformer-based classifiers (BERT, RoBERTa).
+   - Typical options: Logistic Regression with TF-IDF, Transformer-based classifiers (BERT, RoBERTa).
    - Include hyperparameters: learning rate, batch size, epochs, optimizer, etc.
 
 2. **Training Workflow**
@@ -156,12 +140,10 @@ Use `src/evaluate.py` to:
 
 4. **Evaluation**
    - Evaluate final model on held-out test set.
-   - Generate comprehensive reports and save to `models/metrics/`.
 
 5. **Inference**
    - Load trained model.
    - Pass new incoming review data through preprocessing.
-   - Output predictions (e.g. “Helpful” vs. “Not Helpful”) in `predictions/`.
 
 ---
 
