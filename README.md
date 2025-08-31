@@ -9,7 +9,7 @@ Verity is a machine learning project designed to filter and highlight well-inten
 ```
 Verity/
  ├── data/             # Raw and processed datasets
- ├── notebooks/        # Exploratory data analysis & preprocessing notebooks
+ ├── notebooks/        # Exploratory data analysis & preprocessing notebooks and final results under testing.ipynb
  ├── src/              # Core modules: data processing, augmentation, training, evaluation
  ├── models/           # Saved trained models and metrics
  ├── README.md         # Project overview and setup guide
@@ -114,6 +114,7 @@ Workflow:
 
 3. **Pipeline**
    - Apply augmentation during training or store augmented versions.
+   - Use the inital Gradient-Boosting Model to expand labelled set
    - Keep a mapping of original to augmented samples for traceability.
 
 4. **Quality Check**
@@ -123,29 +124,63 @@ Workflow:
 
 ### C. Model Training
 
-1. **Architecture**
-   - Typical options: Logistic Regression with TF-IDF, Transformer-based classifiers (BERT, RoBERTa).
-   - Include hyperparameters: learning rate, batch size, epochs, optimizer, etc.
-
-2. **Training Workflow**
-   - Load and vectorize/tokenize data.
-   - Implement training loop with validation monitoring.
-   - Use early stopping and checkpoints to prevent overfitting.
-   - Save best model under `models/`, e.g., `best_model.pth` or `model.ckpt`.
-
-3. **Logging & Metrics**
-   - Track training and validation loss curves.
-   - Compute performance: Accuracy, Precision, Recall, F1-score.
-   - Visualize results with confusion matrix to understand misclassifications.
-
-4. **Evaluation**
-   - Evaluate final model on held-out test set.
-
-5. **Inference**
-   - Load trained model.
-   - Pass new incoming review data through preprocessing.
+1. **Gradient Boosting (GB) Model**
+   - **Architecture**
+     - Gradient Boosting model (e.g., XGBoost, LightGBM) used as a baseline.  
+     - Trained on structured, vectorized text data.  
+     - Key hyperparameters: `learning_rate`, `n_estimators`, `max_depth`, `subsample`.  
+   - **Training Workflow**
+     - Transform training data using a TF-IDF vectorizer.  
+     - Use K-fold cross-validation for robustness.  
+     - Tune hyperparameters with GridSearchCV or RandomizedSearchCV.  
+     - Save best model in the `models/` directory.  
+   - **Logging & Metrics**
+     - Track training loss curve.  
+     - Metrics: Accuracy, Precision, Recall, F1-score.  
+     - Visualize confusion matrix to analyze misclassifications.  
+   - **Evaluation**
+     - Evaluate final GB model on the held-out test set.  
+   - **Inference**
+     - Preprocess new text with the trained TF-IDF vectorizer.  
+     - Pass vectorized input to GB model for prediction.  
 
 ---
+
+2. **Transformer-Based Model**
+   - **Architecture**
+     - Pre-trained Transformer (e.g., BERT, RoBERTa) fine-tuned for classification.  
+     - Simple classification head (linear layer) on top of Transformer outputs.  
+     - Key hyperparameters: `learning_rate` (~2×10⁻⁵), `batch_size` (8–32), `epochs`, optimizer = AdamW.  
+   - **Training Workflow**
+     - Tokenize data using Transformer tokenizer.  
+     - Implement training loop with validation split.  
+     - Apply early stopping and save best checkpoints (`.ckpt` or `.pth`).  
+   - **Logging & Metrics**
+     - Track training & validation loss curves.  
+     - Metrics: Accuracy, Precision, Recall, F1-score.  
+     - Visualize confusion matrix for misclassification analysis.  
+   - **Evaluation**
+     - Evaluate fine-tuned Transformer on held-out test set.  
+   - **Inference**
+     - Tokenize new text.  
+     - Pass through fine-tuned Transformer for prediction.  
+
+---
+
+3. **Ensemble Model**
+   - **Architecture**
+     - Voting Classifier combining the best Transformer and GB model.  
+     - Supports hard or soft voting for consensus prediction.  
+   - **Training Workflow**
+     - Fit ensemble on outputs of the base models (no new data learned).  
+   - **Logging & Metrics**
+     - Metrics: Accuracy, Precision, Recall, F1-score.  
+     - Compare ensemble performance against base models.  
+   - **Evaluation**
+     - Evaluate ensemble on held-out test set.  
+   - **Inference**
+     - Pass new review through both GB and Transformer models.  
+     - Combine predictions with Voting Classifier for final decision.  
 
 ## 🤝 Contributing
 
