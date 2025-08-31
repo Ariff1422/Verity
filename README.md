@@ -4,6 +4,34 @@ Verity is a machine learning project designed to filter and highlight well-inten
 
 ---
 
+## 📈 Results
+
+We evaluated **Verity’s ensemble model** on a held-out test set of 800 samples.  
+The system achieved an **overall accuracy of 88.5%**, showing that the ensemble consistently outperforms individual models by leveraging their combined strengths.
+
+### 🧪 Evaluation Report
+
+| Class | Precision | Recall | F1-Score | Support |
+|-------|-----------|--------|----------|---------|
+| **1** | 0.94      | 0.94   | 0.94     | 200     |
+| **2** | 0.83      | 0.88   | 0.85     | 202     |
+| **3** | 0.98      | 0.86   | 0.92     | 201     |
+| **4** | 0.81      | 0.86   | 0.83     | 197     |
+
+**Overall Metrics:**
+- **Accuracy:** 0.885  
+- **Macro Avg:** Precision 0.89 | Recall 0.88 | F1-Score 0.89  
+- **Weighted Avg:** Precision 0.89 | Recall 0.89 | F1-Score 0.89  
+
+---
+
+### 🔎 Key Takeaways
+- The ensemble achieved **high precision and recall across all classes**, with especially strong performance in **Class 1 (0.94 F1)** and **Class 3 (0.92 F1)**.  
+- **Class 2 and 4** showed slightly lower precision but solid recall, indicating the system is good at identifying them but occasionally misclassifies.  
+- The results confirm that the **ensemble approach significantly boosts reliability**, outperforming individual models and producing a balanced performance across all categories.  
+
+---
+
 ## 📂 Repository Structure
 
 ```
@@ -188,32 +216,6 @@ Your insights or improvements are welcome! To contribute:
 1. Fork the repo
 2. Create a branch with a clear name (e.g., `feature/augmentation-enhancement`)
 3. Submit a PR describing your changes
-
-## 📈 Results
-
-We evaluated **Verity’s ensemble model** on a held-out test set of 800 samples.  
-The system achieved an **overall accuracy of 88.5%**, showing that the ensemble consistently outperforms individual models by leveraging their combined strengths.
-
-### 🧪 Evaluation Report
-
-| Class | Precision | Recall | F1-Score | Support |
-|-------|-----------|--------|----------|---------|
-| **1** | 0.94      | 0.94   | 0.94     | 200     |
-| **2** | 0.83      | 0.88   | 0.85     | 202     |
-| **3** | 0.98      | 0.86   | 0.92     | 201     |
-| **4** | 0.81      | 0.86   | 0.83     | 197     |
-
-**Overall Metrics:**
-- **Accuracy:** 0.885  
-- **Macro Avg:** Precision 0.89 | Recall 0.88 | F1-Score 0.89  
-- **Weighted Avg:** Precision 0.89 | Recall 0.89 | F1-Score 0.89  
-
----
-
-### 🔎 Key Takeaways
-- The ensemble achieved **high precision and recall across all classes**, with especially strong performance in **Class 1 (0.94 F1)** and **Class 3 (0.92 F1)**.  
-- **Class 2 and 4** showed slightly lower precision but solid recall, indicating the system is good at identifying them but occasionally misclassifies.  
-- The results confirm that the **ensemble approach significantly boosts reliability**, outperforming individual models and producing a balanced performance across all categories.  
 
 ---
 
